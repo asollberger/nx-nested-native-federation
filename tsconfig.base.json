@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nx-nested-native-federation/common": ["libs/common/src/index.ts"],
+      "@nx-nested-native-federation/request-store": [
+        "libs/request-store/src/index.ts"
+      ]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
