@@ -1,0 +1,15 @@
+<p>navigation works!</p>
+
+<button (click)="logState()">log</button>
+
+<p>request routes:</p>
+<button type="button" routerLink="./accounts">accounts</button>
+<button type="button" routerLink="./clients">clients</button>
+
+<button type="button" routerLink="./accounts/profile">accounts profile</button>
+<button type="button" routerLink="./clients/profile">clients profile</button>
+
+<p>{{ account() | json }}</p>
+<p>{{ client() | json }}</p>
+
+<router-outlet></router-outlet>

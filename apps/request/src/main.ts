@@ -1,7 +1,8 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+import { initFederation } from '@angular-architects/native-federation';
 
-bootstrapApplication(AppComponent, appConfig).catch((err) =>
-  console.error(err)
-);
+// This works just fine when started directly
+initFederation('/assets/local.federation.manifest.json')
+    // initFederation()
+    .catch((err) => console.error(err))
+    .then((_) => import('./bootstrap'))
+    .catch((err) => console.error(err));

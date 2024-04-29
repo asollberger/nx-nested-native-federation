@@ -1,0 +1,6 @@
+{
+    "landing": "http://localhost:4201/remoteEntry.json",
+    "request": "http://localhost:4202/remoteEntry.json",
+    "clients": "http://localhost:4203/remoteEntry.json",
+    "accounts": "http://localhost:4204/remoteEntry.json"
+}

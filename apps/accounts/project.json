@@ -1,76 +1,105 @@
 {
-  "name": "accounts",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "projectType": "application",
-  "prefix": "app",
-  "sourceRoot": "apps/accounts/src",
-  "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/apps/accounts",
-        "index": "apps/accounts/src/index.html",
-        "browser": "apps/accounts/src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "apps/accounts/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
-        "assets": ["apps/accounts/src/favicon.ico", "apps/accounts/src/assets"],
-        "styles": ["apps/accounts/src/styles.scss"],
-        "scripts": []
-      },
-      "configurations": {
-        "production": {
-          "budgets": [
-            {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
+    "name": "accounts",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "prefix": "app",
+    "sourceRoot": "apps/accounts/src",
+    "tags": [],
+    "targets": {
+        "build": {
+            "executor": "@angular-architects/native-federation:build",
+            "options": {},
+            "configurations": {
+                "production": {
+                    "target": "accounts:esbuild:production"
+                },
+                "development": {
+                    "target": "accounts:esbuild:development",
+                    "dev": true
+                }
             },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-architects/native-federation:build",
+            "options": {
+                "target": "accounts:serve-original:development",
+                "rebuildDelay": 0,
+                "dev": true
             }
-          ],
-          "outputHashing": "all"
         },
-        "development": {
-          "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
-        }
-      },
-      "defaultConfiguration": "production"
-    },
-    "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "configurations": {
-        "production": {
-          "buildTarget": "accounts:build:production"
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "buildTarget": "accounts:build"
+            }
         },
-        "development": {
-          "buildTarget": "accounts:build:development"
+        "lint": {
+            "executor": "@nx/eslint:lint"
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "apps/accounts/jest.config.ts"
+            }
+        },
+        "esbuild": {
+            "executor": "@angular-devkit/build-angular:application",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/accounts",
+                "index": "apps/accounts/src/index.html",
+                "browser": "apps/accounts/src/main.ts",
+                "polyfills": ["zone.js", "es-module-shims"],
+                "tsConfig": "apps/accounts/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                    "apps/accounts/src/favicon.ico",
+                    "apps/accounts/src/assets"
+                ],
+                "styles": ["apps/accounts/src/styles.scss"],
+                "scripts": []
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "500kb",
+                            "maximumError": "1mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "2kb",
+                            "maximumError": "4kb"
+                        }
+                    ],
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "optimization": false,
+                    "extractLicenses": false,
+                    "sourceMap": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve-original": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "buildTarget": "accounts:esbuild:production"
+                },
+                "development": {
+                    "buildTarget": "accounts:esbuild:development"
+                }
+            },
+            "defaultConfiguration": "development",
+            "options": {
+                "port": 4204,
+                "proxyConfig": "proxy.conf.json"
+            }
         }
-      },
-      "defaultConfiguration": "development"
-    },
-    "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "buildTarget": "accounts:build"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/accounts/jest.config.ts"
-      }
     }
-  }
 }

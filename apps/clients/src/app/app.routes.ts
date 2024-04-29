@@ -1,3 +1,11 @@
-import { Route } from '@angular/router';
+import { Routes } from '@angular/router';
+import { ProfileComponent } from './profile/profile.component';
+import { ClientsComponent } from './clients.component';
 
-export const appRoutes: Route[] = [];
+export const appRoutes: Routes = [
+    {
+        path: '',
+        component: ClientsComponent,
+        children: [{ path: 'profile', component: ProfileComponent }],
+    },
+];
